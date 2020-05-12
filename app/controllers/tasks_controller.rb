@@ -8,4 +8,30 @@ class TasksController < ApplicationController
     # see details of tasks
     @task = Task.find(params[:id])
   end
+
+  def new
+    @task = Task.new
+  end
+
+  def create
+    new_task = Task.new(task_params)
+    new_task.save
+    redirect_to show_task_path(new_task)
+  end
+
+  def edit
+    @task = Task.find(params[:id])
+  end
+
+  def update
+    @task = Task.find(params[:id])
+    @tasks.update(task_params)
+    redirect_to show_task_path(@task)
+  end
+
+  private 
+
+  def task_params
+    params.require(:task).permit(:title, :details)
+  end
 end
